@@ -18,6 +18,9 @@
                     <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
                     <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
                     <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
+                    <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
+                    <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
+                    <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
                     <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
                 </ul>
                 <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
