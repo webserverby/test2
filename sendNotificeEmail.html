@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        .border {
+            border: 1px solid #a6a6a6;
+        }
+        .code-pre {
+            margin: 0;
+            padding: 0;
+            font: normal 12px Consolas, Menlo, "Liberation Mono", Courier, monospace;
+        }
+        .code-added {
+            padding: 2px;
+            background-color: #DDFFDD;
+        }
+        .code-del {
+            padding: 2px;
+            background-color: #FEE8E9;
+        }
+        .code-info {
+            color: #8B8B8B;
+        }
+		.code-header {
+		font: normal 12px Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  padding: 5px 10px;
+  border-bottom: 1px solid #d8d8d8;
+  background-color: #f7f7f7;
+}
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td>URL:</td>
+            <td><a href="${rooturl}${build.url}">${rooturl}${build.url}</a></td>
+        </tr>
+        <tr>
+            <td>Project:</td>
+            <td>${project.name}</td>
+        </tr>
+        <tr>
+            <td>Date:</td>
+            <td>${it.timestampString}</td>
+        </tr>
+        <tr>
+            <td>Duration:</td>
+            <td>${build.durationString}</td>
+        </tr>
+        <tr>
+            <td>Cause:</td>
+            <td><% build.causes.each() { cause -> %> ${cause.shortDescription} <% } %></td>
+        </tr>
+    </table>
+    <br/>
+    <!-- CHANGE SET -->
+    <%
+	import groovy.json.JsonSlurper
+	
+    def changeSet = build.changeSet
+    String urlRepository = project.scm.userRemoteConfigs.url
+	urlRepository = urlRepository.replaceAll(/\[|\]/, "")
+    def usernameRepository = urlRepository.replaceAll("https://github.com/", "")
+    def commitId = ""
+    if(changeSet != null) {
+    def hadChanges = false
+    %>
+    <table width="100%">
+        <tr>
+            <td colspan="2"><b>CHANGES</b></td>
+        </tr>
+        <%
+        changeSet.each() { cs ->
+        hadChanges = true
+        commitId = cs.id
+        %>
+        <tr>
+            <td colspan="2">URL-COMMIT: <a href="${urlRepository}/commit/${commitId}">${urlRepository}/commit/${commitId}</a></td>
+        </tr>
+        <tr>
+            <td colspan="2">Revision <b><%= cs.metaClass.hasProperty('id') ? cs.id :
+                cs.metaClass.hasProperty('revision') ? cs.revision :
+                cs.metaClass.hasProperty('changeNumber') ? cs.changeNumber : "" %></b> by
+                <b><%= cs.author %>: </b>
+                <b>(${cs.msgAnnotated})</b>
+            </td>
+        </tr>
+        <% cs.affectedFiles.each() { p -> %>
+        <tr>
+            <td width="10%">&nbsp;&nbsp;${p.editType.name}</td>
+            <td>${p.path}</td>
+        </tr>
+        <% }
+        }
+        if(!hadChanges) { %>
+        <tr>
+            <td colspan="2">No Changes</td>
+        </tr>
+        <% } %>
+    </table>
+    <br/>
+    <% } %>
+</div>
+<div>
+    <table class="border">
+       <%
+        if(commitId) {		        
+        def apiUrl = "https://api.github.com/repos/${usernameRepository}/commits/${commitId}"
+		def json = new JsonSlurper().parseText( new URL(apiUrl).text )
+        json.files.each { file ->
+		%>
+            <tr><div class="code-header">${file.filename}</div></tr>
+		<%	
+            file.patch.eachLine { line ->
+				line = line.replaceAll("<", "&lt;")
+				line = line.replaceAll(">", "&gt;")
+                line1 = line.replaceAll(/@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/, "<span class=\"code-info\">" + line  + "</span>")
+				def line2 = ""
+				def line3 = ""
+				try {
+				line2 = line1.replaceAll(/^(\-)([\S ]*)(?:\t(.*?)\s*)?$/, "<span class=\"code-del\">${line1}</span>")
+				}
+				catch(ex) {
+				line2 = "<span class=\"code-del\">${line1}</span>"
+				}
+				try {
+				line3 = line2.replaceAll(/^(\+)([\S ]*)(?:\t(.*?)\s*)?$/, "<span class=\"code-added\">${line2}</span>")
+				}
+				catch(ex) {
+				line3 = "<span class=\"code-added\">${line2}</span>"
+				}   
+		%>	
+		<tr>
+            <pre class="code-pre">${line3}</pre>
+        </tr>
+		<% }
+		}
+		}
+		%>		
+    </table>
+</div>
+</body>
+</html>
