@@ -14,23 +14,17 @@
 
                     <li>An error has occurred</li>
                     <li>Exception: ${exception}</li>
-    est="${request.getAttribute('javax.servlet.error.exception')}">
-    <g:renderException exception="${request.getAttribute('javax.servlet.error.exception')}" />
-    </g:elseif>
-            <g:else>
-                <ul class="errors">
-                    <li>Message: ${message}</li>
-                    <li>Path: ${path}</li>
-                </ul>
+    e  </li>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
+                    <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
+                    <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
             </g:else>
         </g:if>
         <g:else>
     est="${request.getAttribute('javax.servlet.error.exception')}">
     <g:renderException exception="${request.getAttribute('javax.servlet.error.exception')}" />
-    </g:elseif>
-            <g:else>
-                <ul class="errors">
-            <ul class="errors">
+    </
                 <li>An error has occurred</li>
             </ul>
         </g:else>
