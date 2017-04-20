@@ -37,21 +37,18 @@
                 <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
                 <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
             </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-                    <li><a href="#">${plugin.name} - ${plugin.version}</a></li>
-                </g:each>
-            </ul>
+            </g:each>
+        </ul>
         </li>
     </content>
 
-    <div class="svg" role="presentation">
-        <div class="grails-logo-container">
-            <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
-        </div>
+<div class="svg" role="presentation">
+<div class="grails-logo-container">
+    <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
+</div>n-menu">
+                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
+                    <li><a href="#">${plugin.name} - ${plugin.version}</a></li>
+
     </div>
 
     <div id="content" role="main">
