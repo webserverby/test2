@@ -15,13 +15,7 @@
                     <g:meta name="info.app.grailsVersion"/></a>
                 </li>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-                    <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-                    <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-                    <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-                    <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
 
-                <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
                 <li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
@@ -40,12 +34,13 @@
                 <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
                 <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
             </ul>
-            </g:each>
-        </ul>
-        </li>
-    </content>
+        <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
+        <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
+        <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
+        <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
+        <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
 
-<div class="svg" role="presentation">
+        <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li><div class="svg" role="presentation">
 <div class="grails-logo-container">
     <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
 </div>n-menu">
