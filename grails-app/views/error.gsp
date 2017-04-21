@@ -6,16 +6,14 @@
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
 
         <li>An error has occurred</li>
-        <li>Exception: ${exception}</li>
-        e  </li>
-        <ul class="dropdown-menu">
-            <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-            <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
+     n.domainClasses.size()}</a></li>
             <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
             </g:else>
             </g:if>
     <ul class="errors">
         <li>An error has occurred</li>
+        <ul class="errors">
+            <li>An error has occurr
         <li>Exception: ${ex
         <g:if env="development">
             <g:if test="${Throwable.isInstance(exception)}">
