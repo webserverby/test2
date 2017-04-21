@@ -62,25 +62,21 @@
 <%
 import groovy.json.JsonSlurper
 
-String checkForWord = project.scm
 def changeSet = build.changeSet
-
-if(checkForWord.contains("git")){
-    String urlRepository = project.scm.userRemoteConfigs.url
-    urlRepository = urlRepository.replaceAll(/\[|\]/, "")
-    def usernameRepository = urlRepository.replaceAll("https://github.com/", "")
-    def commitId = ""
-    if(changeSet != null) {
+if(changeSet != null) {	
     def hadChanges = false
+    changeSet.each() { cs ->
+		hadChanges = true
+		String checkForWord = project.scm
+		if(checkForWord.contains("git")){
+			String urlRepository = project.scm.userRemoteConfigs.url
+			urlRepository = urlRepository.replaceAll(/\[|\]/, "")
+			def usernameRepository = urlRepository.replaceAll("https://github.com/", "")
+			def commitId = cs.id	
 %>
 <div>
     <table width="100%">
-        <tr><td colspan="2"><b>CHANGES</b></td></tr>
-        <%
-        changeSet.each() { cs ->
-        hadChanges = true
-        commitId = cs.id
-        %>
+        <tr><td colspan="2"><b>CHANGES</b></td></tr>        
         <tr>
             <td colspan="2">URL-COMMIT: <a href="${urlRepository}/commit/${commitId}">${urlRepository}/commit/${commitId}</a>
             </td>
@@ -98,14 +94,9 @@ if(checkForWord.contains("git")){
             <td width="10%">&nbsp;&nbsp;${p.editType.name}</td>
             <td>${p.path}</td>
         </tr>
-        <% }
-        }
-        if(!hadChanges) { %>
-        <tr><td colspan="2">No Changes</td></tr>
         <% } %>
     </table>
-</div>
-    <% } %>
+</div>	
 <br/>
 <div>
     <table class="border">
@@ -148,18 +139,11 @@ if(checkForWord.contains("git")){
 } else {
     String urlRepository = project.scm.browser.url
     def usernameRepository = urlRepository.replaceAll("https://bitbucket.org/", "")
-    def commitId = ""
-    if(changeSet != null) {
-    def hadChanges = false
+    def commitId = cs.node 
 %>
 <div>
     <table width="100%">
-        <tr><td colspan="2"><b>CHANGES</b></td></tr>
-        <%
-        changeSet.each() { cs ->
-        hadChanges = true
-        commitId = cs.node
-        %>
+        <tr><td colspan="2"><b>CHANGES</b></td></tr>       
         <tr>
             <td colspan="2">URL-COMMIT: <a href="${urlRepository}commits/${commitId}">${urlRepository}commits/${commitId}</a>
             </td>
@@ -177,14 +161,9 @@ if(checkForWord.contains("git")){
             <td width="10%">&nbsp;&nbsp;${p.editType.name}</td>
             <td>${p.path}</td>
         </tr>
-        <% }
-        }
-        if(!hadChanges) { %>
-        <tr><td colspan="2">No Changes</td></tr>
-        <% } %>
+        <% } %>            
     </table>
 </div>
-<% } %>
 <br/>
 <div>
     <table class="border">
@@ -226,6 +205,15 @@ if(checkForWord.contains("git")){
         %>
     </table>
 </div>
-<% } %>
+	<% 
+		} 
+	}	
+	if(!hadChanges) { 
+	%>
+    <div>No Changes</div>
+    <% 
+	}
+}
+%>
 </body>
 </html>
