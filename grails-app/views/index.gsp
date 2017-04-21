@@ -10,14 +10,7 @@
     <content tag="nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-            <ul class="dropdown-menu">
 
-                    <g:meta name="info.app.grailsVersion"/></a>
-                </li>
-                <ul class="dropdown-menu">
-
-                <li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-                <li role="separator" class="divider"></li>
                 <li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
             </ul>
         </li>
